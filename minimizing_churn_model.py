@@ -65,10 +65,10 @@ y_pred = classifier.predict(X_test)
 
 from sklearn.metrics import confusion_matrix, accuracy_score, f1_score, precision_score, recall_score
 cm = confusion_matrix(y_test, y_pred)
-# print(accuracy_score(y_test, y_pred))
-# print(precision_score(y_test, y_pred)) # tp / (tp + fp)
-# print(recall_score(y_test, y_pred)) # tp / (tp + fn)
-# print(f1_score(y_test, y_pred))
+print(accuracy_score(y_test, y_pred))
+print(precision_score(y_test, y_pred)) # tp / (tp + fp)
+print(recall_score(y_test, y_pred)) # tp / (tp + fn)
+print(f1_score(y_test, y_pred))
 
 df_cm = pd.DataFrame(cm, index = (0, 1), columns = (0, 1))
 plt.figure(figsize = (10,7))
@@ -79,7 +79,7 @@ sns.heatmap(df_cm, annot=True, fmt='g')
 
 from sklearn.model_selection import cross_val_score
 accuracies = cross_val_score(estimator = classifier, X = X_train, y = y_train, cv = 10)
-# print("K-Fold Cross Validation Accuracy: %0.3f (+/- %0.3f)" % (accuracies.mean(), accuracies.std() * 2))
+print("K-Fold Cross Validation Accuracy: %0.3f (+/- %0.3f)" % (accuracies.mean(), accuracies.std() * 2))
 
 # Analyzing Coefficients
 temp=pd.concat([pd.DataFrame(X_train.columns, columns = ["features"]),
@@ -96,9 +96,9 @@ classifier = LogisticRegression()
 rfe = RFE(classifier, 20)
 rfe = rfe.fit(X_train, y_train)
 
-# print(rfe.support_)
-# print(rfe.ranking_)
-# print(X_train.columns[rfe.support_])
+print(rfe.support_)
+print(rfe.ranking_)
+print(X_train.columns[rfe.support_])
 
 # Fitting model using best 20 features
 from sklearn.linear_model import LogisticRegression
@@ -109,17 +109,17 @@ y_pred = classifier.predict(X_test[X_train.columns[rfe.support_]])
 
 from sklearn.metrics import confusion_matrix, accuracy_score, f1_score, precision_score, recall_score
 cm = confusion_matrix(y_test, y_pred)
-# print(accuracy_score(y_test, y_pred))
-# print(precision_score(y_test, y_pred)) # tp / (tp + fp)
-# print(recall_score(y_test, y_pred)) # tp / (tp + fn)
-# print(f1_score(y_test, y_pred))
+print(accuracy_score(y_test, y_pred))
+print(precision_score(y_test, y_pred)) # tp / (tp + fp)
+print(recall_score(y_test, y_pred)) # tp / (tp + fn)
+print(f1_score(y_test, y_pred))
 
 df_cm = pd.DataFrame(cm, index = (1, 0), columns = (1, 0))
 plt.figure(figsize = (10,7))
 sns.set(font_scale=1.4)
 sns.heatmap(df_cm, annot=True, fmt='g')
-# plt.show()
-# print("Test Data Accuracy: %0.4f" % accuracy_score(y_test, y_pred))
+plt.show()
+print("Test Data Accuracy: %0.4f" % accuracy_score(y_test, y_pred))
 
 temp= pd.concat([pd.DataFrame(X_train[X_train.columns[rfe.support_]].columns, columns = ["features"]),
            pd.DataFrame(np.transpose(classifier.coef_), columns = ["coef"])
